@@ -52,19 +52,13 @@ export function syncBreakpoint(
   pendingBreakpoint: PendingBreakpoint
 ) {
   return async ({ dispatch, getState, client, sourceMaps }: ThunkArgs) => {
-    const response = await syncClientBreakpoint(
+    const { breakpoint, previousLocation } = await syncClientBreakpoint(
       getState,
       client,
       sourceMaps,
       sourceId,
       pendingBreakpoint
     );
-
-    if (!response) {
-      return;
-    }
-
-    const { breakpoint, previousLocation } = response;
 
     return dispatch(
       ({
